@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+        <AssemblyName>Cola.CaLog</AssemblyName>
+        <RootNamespace>Cola.CaLog</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Cola.CaConsole\Cola.CaConsole.csproj"/>
+        <ProjectReference Include="..\Cola.Models.Core\Cola.Models.Core.csproj"/>
+        <ProjectReference Include="..\Cola.CaSnowFlake\Cola.CaSnowFlake.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="SqlSugar">
+            <HintPath>C:\Users\Administrator\.nuget\packages\sqlsugarcore\5.1.4.60\lib\netstandard2.1\SqlSugar.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+</Project>
