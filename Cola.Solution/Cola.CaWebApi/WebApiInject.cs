@@ -21,7 +21,7 @@ public static class WebApiInject
     private static IServiceCollection InjectColaWebApi(IServiceCollection services)
     {
         services.AddSingleton<IWebApi, WebApi>();
-        ConsoleHelper.WriteLine("注入类型【 IWebApi, WebApi 】", backgroundColor: ConsoleColor.Green);
+        ConsoleHelper.WriteInfo("注入类型【 IWebApi, WebApi 】");
         return services;
     }
 }
