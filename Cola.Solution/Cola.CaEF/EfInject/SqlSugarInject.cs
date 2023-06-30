@@ -86,7 +86,7 @@ public static class SqlSugarInject
         if (sqlSugarConfigLst.Count > 0)
         {
             services.AddSingleton<ISqlSugarRepository>(SqlSugarRepository.Create);
-            ConsoleHelper.WriteLine("注入类型【 ISqlSugarRepository, SqlSugarRepository 】", backgroundColor: ConsoleColor.Green);
+            ConsoleHelper.WriteInfo("注入类型【 ISqlSugarRepository, SqlSugarRepository 】");
         }
         else
         {
