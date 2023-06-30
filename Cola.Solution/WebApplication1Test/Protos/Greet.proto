@@ -1,0 +1,76 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "WebApi.Protos";
+
+package greet;
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/any.proto";
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting  一元调用
+  rpc SayHello (HelloRequest) returns (HelloReply);
+  // 复杂 一元调用
+  rpc ServiceMethod(ServiceMethodParamts) returns (ServiceMethodResponse);
+  // 客户端流式调用
+  rpc ClientStreamMethodAsync(stream ClientStreamMethodParam) returns (ClientStreamMethodResponse);
+
+  // 客户端流式调用
+  rpc ServerStreamMethodAsync(ClientMethodParam) returns (stream ServerStreamMethodResponse);
+
+  // 双向流调用
+  rpc ClientServerStreamMethodAsync(stream ClientStreamMethodParam) returns (stream ServerStreamMethodResponse);
+  
+}
+
+message ClientMethodParam {
+  repeated int32 lst = 1;
+}
+
+message ServerStreamMethodResponse {
+  string Result = 1;
+}
+
+message ClientStreamMethodParam {
+  int32 par = 1;
+}
+message ClientStreamMethodResponse{
+  int32 result = 1;
+}
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message HelloReply {
+  string message = 1;
+}
+
+//多参数请求参数
+message ServiceMethodParamts {
+  int32 Id = 1;
+  string Name = 2;//参数个数
+  bool IsExists = 3;
+  //repeated 字段由 Google.Protobuf.Collections.RepeatedField<T> 泛型类型表示
+  repeated string Roles = 4;
+  //.NET IDictionary<TKey,TValue>
+  map<string, string> Attributes = 5;
+  google.protobuf.Any Detail = 6;
+}
+message Person {
+  google.protobuf.Timestamp start = 7;
+  map<string, string> attributes = 8;
+}
+
+message Error {
+  google.protobuf.Int32Value age = 9;
+  google.protobuf.Duration duration = 10;
+}
+message ServiceMethodResponse {
+  oneof result {
+    Error error = 11;
+    Person person = 12;
+  }
+}

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>disable</Nullable>
+        <LangVersion>10</LangVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+        <AssemblyName>Cola.CaSnowFlake</AssemblyName>
+        <RootNamespace>Cola.CaSnowFlake</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Cola.CaConsole\Cola.CaConsole.csproj"/>
+        <ProjectReference Include="..\Cola.Models.Core\Cola.Models.Core.csproj"/>
+        <ProjectReference Include="..\Cola.CaUtils\Cola.CaUtils.csproj"/>
+    </ItemGroup>
+</Project>
