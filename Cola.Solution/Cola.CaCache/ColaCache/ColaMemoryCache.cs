@@ -7,6 +7,7 @@ namespace Cola.CaCache.ColaCache;
 
 public class ColaMemoryCache : IColaMemoryCache, IDisposable
 {
+    private readonly MemoryCacheConfig _memoryCacheConfig;
     public IMemoryCache MemoryCache { get; set; }
     private readonly MemoryCacheOptions memoryCacheOptions;
     private readonly ReaderWriterLockSlim memoryLock;
@@ -26,6 +27,8 @@ public class ColaMemoryCache : IColaMemoryCache, IDisposable
             MemoryCache = new MemoryCache(memoryCacheOptions);
             memoryLock = new ReaderWriterLockSlim();
         }
+
+        _memoryCacheConfig = options.MemoryCache;
     }
 
     public T? Get<T>(string key, int database = 0)
@@ -35,7 +38,7 @@ public class ColaMemoryCache : IColaMemoryCache, IDisposable
 
     public bool Set<T>(string key, T value, TimeSpan? expiry = null, int database = 0)
     {
-        MemoryCache.Set<T>(key, value, expiry.Value);
+        MemoryCache.Set<T>(key, value, expiry!=null?expiry.Value:TimeSpan.FromMinutes(_memoryCacheConfig.DefaultExpiration));
         return true;
     }
 

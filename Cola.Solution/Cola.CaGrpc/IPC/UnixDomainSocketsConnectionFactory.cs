@@ -1,15 +1,15 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace ConsoleApp1Test;
+namespace Cola.CaGrpc.IPC;
 
 public class UnixDomainSocketsConnectionFactory
 {
-    private readonly EndPoint endPoint;
+    private readonly EndPoint _endPoint;
 
     public UnixDomainSocketsConnectionFactory(EndPoint endPoint)
     {
-        this.endPoint = endPoint;
+        _endPoint = endPoint;
     }
 
     public async ValueTask<Stream> ConnectAsync(SocketsHttpConnectionContext _,
@@ -19,7 +19,7 @@ public class UnixDomainSocketsConnectionFactory
 
         try
         {
-            await socket.ConnectAsync(this.endPoint, cancellationToken).ConfigureAwait(false);
+            await socket.ConnectAsync(_endPoint, cancellationToken).ConfigureAwait(false);
             return new NetworkStream(socket, true);
         }
         catch

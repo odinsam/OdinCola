@@ -9,7 +9,7 @@ public class CacheConfigOption
     /// Redis = 2,      使用redis缓存
     /// Hybrid = 3      优先模式：有限使用本地缓存，再使用redis缓存
     /// </summary>
-    public int CacheType { get; set; }
+    public int CacheType { get; set; } = 0;
     /// <summary>
     /// redis 缓存配置
     /// </summary>

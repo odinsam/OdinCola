@@ -148,4 +148,56 @@ public enum EnumException
     [Description("邮箱格式不正确")] RegexPhoneNumber,
 
     #endregion
+
+    #region Jwt
+
+    /// <summary>
+    ///     refreshToken is null
+    /// </summary>
+    [Description("refreshToken is null")]
+    RefreshTokenIsNull,
+    
+    /// <summary>
+    ///     Invalid Token 无效的token
+    /// </summary>
+    [Description("Invalid Token")]
+    InvalidToken,
+    
+    /// <summary>
+    ///     Token Expire token过期
+    /// </summary>
+    [Description("Token Expire")]
+    TokenExpire,
+    
+    /// <summary>
+    ///     Invalid RefreshToken 无效的refresh_token
+    /// </summary>
+    [Description("Invalid RefreshToken")]
+    InvalidRefreshToken,
+    
+    /// <summary>
+    ///     RefreshToken Expire refresh_token已过期
+    /// </summary>
+    [Description("RefreshToken Expire")]
+    RefreshTokenExpire,
+    
+    /// <summary>
+    ///     RefreshToken Nullified refresh_token已失效
+    /// </summary>
+    [Description("RefreshToken Nullified")]
+    RefreshTokenNullified,
+    
+    /// <summary>
+    ///     RefreshToken Used refresh_token已使用
+    /// </summary>
+    [Description("RefreshToken Used")]
+    RefreshTokenUsed,
+    
+    /// <summary>
+    ///     RefreshToken Validate JwtId Fail token 与 refresh_token不一致
+    /// </summary>
+    [Description("RefreshToken Validate JwtId Fail")]
+    RefreshTokenValidateJwtIdFail,
+    
+    #endregion
 }

@@ -1,5 +1,6 @@
 ﻿using Cola.CaUtils;
 using Cola.CaUtils.Enums;
+using Cola.Models.Core.Models.CaJwt;
 
 namespace Cola.Models.Core.Models;
 
@@ -54,4 +55,6 @@ public class ApiResult
     ///     返回异常对象
     /// </summary>
     public Exception? Error { get; set; }
+
+    public AccessToken Token { get; set; }
 }

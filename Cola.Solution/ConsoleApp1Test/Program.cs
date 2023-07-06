@@ -9,6 +9,9 @@ using Cola.CaEF.BaseRepository;
 using Cola.CaEF.EfInject;
 using Cola.CaEF.Models;
 using Cola.CaException;
+using Cola.CaGrpc;
+using Cola.CaGrpc.ColaGrpcClientInterceptor;
+using Cola.CaGrpc.IPC;
 using Cola.CaLog;
 using Cola.CaLog.Core;
 using Cola.CaSnowFlake;
@@ -20,6 +23,8 @@ using ConsoleApp1Test;
 using ConsoleApp1Test.EFTest;
 using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
+using Grpc.Core.Interceptors;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -139,18 +144,57 @@ Console.WriteLine();Console.WriteLine();
 //     Thread.Sleep(500);
 // }
 
+
+// 注入grpc客户端
+var _token = "asdf";
+builder.Services
+    .AddGrpcClient<Greeter.GreeterClient>(o =>
+    {
+        o.Address = new Uri("https://localhost:5005");
+        o.Interceptors.Add(new ClientGrpcInterceptor(builder.Services.BuildServiceProvider().GetService<IColaLogs>()!,
+            config));
+    })
+    .AddCallCredentials((context, metadata) =>
+    {
+        if (!string.IsNullOrEmpty(_token))
+        {
+            metadata.Add("Authorization", $"odinsam Bearer {_token}");
+        }
+        return Task.CompletedTask;
+    })
+    .ConfigureChannel(options =>
+    {
+        options.CreateGrpcClientChannelOptions(config);
+    });
+var client = builder.Services.BuildServiceProvider().GetService<Greeter.GreeterClient>();
+
+
+// IPC进程内调用grpc
 //net core 3.x 显式的指定HTTP/2不需要TLS支持
-// // AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-// var channel = GrpcChannel.ForAddress("http://localhost:5004");
-var channel = new ColaGrpcHelper(new ColaWindowsGrpc()).CreateChannel("https://localhost:5005");
-var client = new Greeter.GreeterClient(channel);
+// AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
+// var credentials = CallCredentials.FromInterceptor((context, metadata) =>
+// {
+//     if (!string.IsNullOrEmpty(_token))
+//     {
+//         metadata.Add("Authorization", $"Bearer {_token}");
+//     }
+//     return Task.CompletedTask;
+// });
+// var channel = new ColaGrpcHelper(new ColaWindowsGrpc()).CreateChannel("https://localhost:5005",config,null,credentials);
+// var invoker =
+//     channel.Intercept(new ClientGrpcInterceptor(builder.Services.BuildServiceProvider().GetService<IColaLogs>()!,
+//         config));
+// var client = new Greeter.GreeterClient(invoker);
 
 // 一元调用
 ConsoleHelper.WriteInfo("一元调用 start");
+var headers = new Metadata();
+headers.Add("customHeader","odin-custom-header");
 var helloReply = client.SayHelloAsync(new HelloRequest
 {
     Name = "odin-sam"
-});
+},headers);
 var resultOnce = await helloReply;
 Console.WriteLine(resultOnce.Message);
 ConsoleHelper.WriteInfo("一元调用 over");
@@ -254,59 +298,4 @@ public class DataModel
     [JsonProperty("country")] public string Country { get; set; }
 
     [JsonProperty("province")] public string Province { get; set; }
-}
-
-public interface IColaGrpc
-{
-    GrpcChannel CreateChannel(string grpcUrl, string? pipeNameOrSocketPath=null);
-}
-
-public class ColaWindowsGrpc : IColaGrpc
-{
-    public GrpcChannel CreateChannel(string grpcUrl, string? pipeNameOrSocketPath=null)
-    {
-        if (SystemHelper.NetCoreVersion!.Major > 8)
-        {
-            var connectionFactory = new NamedPipesConnectionFactory(pipeNameOrSocketPath!);
-            var socketsHttpHandler = new SocketsHttpHandler
-            {
-                ConnectCallback = connectionFactory.ConnectAsync
-            };
-            return GrpcChannel.ForAddress(grpcUrl, new GrpcChannelOptions
-            {
-                HttpHandler = socketsHttpHandler
-            });
-        }
-        return GrpcChannel.ForAddress(grpcUrl);
-    }
-}
-public class ColaUnixGrpc : IColaGrpc
-{
-    public GrpcChannel CreateChannel(string grpcUrl, string? pipeNameOrSocketPath=null)
-    {
-        var udsEndPoint = new UnixDomainSocketEndPoint(pipeNameOrSocketPath!);
-        var connectionFactory = new UnixDomainSocketsConnectionFactory(udsEndPoint);
-        var socketsHttpHandler = new SocketsHttpHandler
-        {
-            ConnectCallback = connectionFactory.ConnectAsync
-        };
-        return GrpcChannel.ForAddress(grpcUrl, new GrpcChannelOptions
-        {
-            HttpHandler = socketsHttpHandler
-        });
-    }
-}
-public class ColaGrpcHelper
-{
-    private readonly IColaGrpc _colaGrpc;
-    
-    public ColaGrpcHelper(IColaGrpc colaGrpc)
-    {
-        _colaGrpc = colaGrpc;
-    }
-    
-    public GrpcChannel CreateChannel(string grpcUrl, string? pipeNameOrSocketPath=null)
-    {
-        return _colaGrpc.CreateChannel(grpcUrl, pipeNameOrSocketPath);
-    }
 }

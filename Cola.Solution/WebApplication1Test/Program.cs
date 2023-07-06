@@ -1,27 +1,41 @@
 using System.Net;
+using Cola.CaCache;
+using Cola.CaException;
+using Cola.CaGrpc;
+using Cola.CaJwt;
+using Cola.CaLog;
+using Cola.CaSnowFlake;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using WebApplication1Test;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Configuration.AddJsonFile("appsettings.json");
 var config = builder.Configuration;
+// ColaException 注入
+builder.Services.AddColaExceptionSingleton();
+Console.WriteLine();Console.WriteLine();
+//雪花Id注入
+builder.Services.AddSingletonSnowFlake(config);
+Console.WriteLine();Console.WriteLine();
+//日志组件注入
+builder.Services.AddSingletonColaLogs(config);
 // Add services to the container.
 // builder.WebHost.UseUrls("http://localhost:5400");
-builder.Services.AddControllers();
+//jwt注入
+builder.Services.AddColaJwt<ApiResponseForAuthenticationHandler>(config);
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ColaAsyncAuthorizationFilter>();
+    options.Filters.Add<ColaIAlwaysRunResultFilter>();
+});
 builder.Services.AddMemoryCache();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
+builder.Services.AddColaGrpc(config);
 builder.Services.AddEndpointsApiExplorer();
 //将Redis分布式缓存服务添加到服务中
-builder.Services.AddDistributedRedisCache(options =>
-{
-    //用于连接Redis的配置  
-    options.Configuration =
-        "47.122.0.223:6379,password=173djjDJJ,defaultDatabase=0,connectTimeout=5000,syncTimeout=1000"; // Configuration.GetConnectionString("RedisConnectionString");
-    //Redis实例名RedisDistributedCache
-    options.InstanceName = "RedisDistributedCache";
-});
-builder.Services.AddSwaggerGen();
+// 缓存 组件
+builder.Services.AddSingletonColaCache(config);
+builder.Services.AddColaSwaggerGen();
 //允许一个或多个来源可以跨域
 builder.Services.AddCors(options =>
 {
@@ -34,7 +48,6 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
-
 builder.WebHost.ConfigureKestrel(options =>
 {
     if (OperatingSystem.IsWindows())
@@ -63,7 +76,10 @@ builder.WebHost.ConfigureKestrel(options =>
         });
     }
 });
-builder.Services.AddGrpc();
+
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -77,6 +93,7 @@ app.UseHttpsRedirection();
 app.MapControllers();
 app.UseCors("cors");
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {

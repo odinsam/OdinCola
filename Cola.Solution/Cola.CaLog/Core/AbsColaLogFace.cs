@@ -40,7 +40,8 @@ public abstract class AbsColaLogFace : IColaLogFace
     private LogResponse? WriteLogInfo(LogModel logInfo)
     {
         if (logInfo.LogSaveType != null && (logInfo.LogSaveType.Contains(EnumLogSaveType.File) ||
-                                            logInfo.LogSaveType.Contains(EnumLogSaveType.All))) LogWriteFile(logInfo);
+                                            logInfo.LogSaveType.Contains(EnumLogSaveType.All))) 
+            LogWriteFile(logInfo);
 
         if (logInfo.LogSaveType != null && (logInfo.LogSaveType.Contains(EnumLogSaveType.MySql) ||
                                             logInfo.LogSaveType.Contains(EnumLogSaveType.SqlServer) ||

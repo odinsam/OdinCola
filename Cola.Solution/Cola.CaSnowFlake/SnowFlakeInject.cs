@@ -35,6 +35,7 @@ public static class SnowFlakeInject
     public static IServiceCollection AddSingletonSnowFlake(this IServiceCollection services, IConfiguration config)
     {
         var snowFlakeConfig = config.GetSection(SystemConstant.CONSTANT_COLASNOWFLAKE_SECTION).Get<SnowFlakeConfig>();
+        snowFlakeConfig = snowFlakeConfig ?? new SnowFlakeConfig();
         services.AddSingleton<IColaSnowFlake>(new ColaSnowFlake(snowFlakeConfig.DatacenterId,
             snowFlakeConfig.WorkerId));
         ConsoleHelper.WriteInfo("注入类型【 IColaSnowFlake, ColaSnowFlake 】");

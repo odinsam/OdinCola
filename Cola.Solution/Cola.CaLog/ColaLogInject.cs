@@ -18,6 +18,7 @@ public static class ColaLogInject
         IConfiguration config)
     {
         var logConfig = config.GetSection(SystemConstant.CONSTANT_COLALOGS_SECTION).Get<LogConfig>();
+        logConfig = logConfig ?? new LogConfig();
         var opts = new LogConfigOption { Config = logConfig };
         services.AddSingleton<IColaLogs>(provider => new ColaLogs(opts, services));
         ConsoleHelper.WriteInfo("注入类型【 IColaLogs, ColaLogs 】");

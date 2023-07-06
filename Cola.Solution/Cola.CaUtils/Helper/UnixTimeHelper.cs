@@ -18,6 +18,19 @@ public class UnixTimeHelper
             return FromDateTime(dateTime);
         return (dateTime.ToLocalTime().Ticks - BaseTime.ToLocalTime().Ticks) / 10000;
     }
+    
+    /// <summary>  
+    /// Unix时间戳转为C#格式时间  
+    /// </summary>  
+    /// <param name="timeStamp">Unix时间戳格式,例如1482115779</param>  
+    /// <returns>C#格式时间</returns>  
+    public static DateTime GetDateTime(string timeStamp)
+    {
+        DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(BaseTime);
+        long lTime = long.Parse(timeStamp + "0000000");
+        TimeSpan toNow = new TimeSpan(lTime);
+        return dtStart.Add(toNow);
+    }
 
     /// <summary>
     ///     将.NET的DateTime转换为unix time
@@ -37,7 +50,7 @@ public class UnixTimeHelper
     {
         return FromDateTime(DateTime.Now);
     }
-
+    
     /// <summary>
     ///     将.NET的DateTime转换为unix time ms
     /// </summary>

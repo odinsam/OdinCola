@@ -8,4 +8,6 @@ public class MemoryCacheConfig
     public int ExpirationScanFrequency { get; set; } = 30;
     //设置缓存项数量达到最大限制后，移除缓存项的百分比。默认值为 0.1，表示移除最近最少使用的 10% 的缓存项。
     public float CompactionPercentage { get; set; } = 0.1f;
+    // 本地缓存的默认时间
+    public int DefaultExpiration { get; set; } = 30;
 }

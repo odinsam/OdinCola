@@ -16,7 +16,7 @@ service Greeter {
   // 客户端流式调用
   rpc ClientStreamMethodAsync(stream ClientStreamMethodParam) returns (ClientStreamMethodResponse);
 
-  // 客户端流式调用
+  // 服务端流式调用
   rpc ServerStreamMethodAsync(ClientMethodParam) returns (stream ServerStreamMethodResponse);
 
   // 双向流调用

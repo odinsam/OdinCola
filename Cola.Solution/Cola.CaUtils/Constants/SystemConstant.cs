@@ -77,11 +77,24 @@ public class SystemConstant
 
     #endregion
 
+    #region Grpc配置
+
+    public const string CONSTANT_COLAGRPCSERVER_SECTION = "ColaGrpcServer";
+    public const string CONSTANT_COLAGRPCCLIENT_SECTION = "ColaGrpcClient";
+
+    #endregion
+
     #region EF 配置
 
     public const string CONSTANT_COLAORM_SECTION = "ColaOrm";
 
     #endregion"
+
+    #region Jwt 配置
+
+    public const string CONSTANT_COLAJWT_SECTION = "ColaJwt";
+
+    #endregion
 
     #endregion
 }

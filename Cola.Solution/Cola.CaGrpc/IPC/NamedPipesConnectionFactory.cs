@@ -1,14 +1,8 @@
 ﻿using System.IO.Pipes;
-using System.Reflection;
 using System.Security.Principal;
-using Cola.CaUtils.Extensions;
-using Cola.CaUtils.Helper;
 
-namespace ConsoleApp1Test;
+namespace Cola.CaGrpc.IPC;
 
-/// <summary>
-/// Grpc IPC进程内通信 只支持 .NET 8以上的版本(含)
-/// </summary>
 public class NamedPipesConnectionFactory
 {
     private readonly string _pipeName;

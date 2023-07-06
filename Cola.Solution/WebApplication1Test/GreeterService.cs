@@ -13,12 +13,16 @@ public class GreeterService : Greeter.GreeterBase
     {
         _logger = logger;
     }
-
+    
     public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
     {
+        foreach (var item in context.RequestHeaders)
+        {
+            Console.WriteLine($"item key:{item.Key}   item value:{item.Value}");
+        }
         return Task.FromResult(new HelloReply
         {
-            Message = "Hello webApi      " + request.Name
+            Message = "Hello webApi " + request.Name
         });
     }
 
@@ -41,6 +45,8 @@ public class GreeterService : Greeter.GreeterBase
             {"Detail", JsonConvert.SerializeObject(request.Detail.Unpack<Person>())}
         };
         response.Person.Attributes.Add(dic);
+        // int a = 1, b = 0;
+        // int c = a / b;
         return Task.FromResult(response);
     }
     

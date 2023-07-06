@@ -37,6 +37,7 @@ public static class SqlSugarInject
         List<AopOnErrorModel>? aopOnErrorModels = null)
     {
         var colaEfConfig = configuration.GetSection(SystemConstant.CONSTANT_COLAORM_SECTION).Get<ColaEfConfigOption>();
+        colaEfConfig = colaEfConfig ?? new ColaEfConfigOption();
         var opts = new ColaEfConfigOption
         {
             TenantResolutionStrategy = colaEfConfig.TenantResolutionStrategy,
@@ -86,11 +87,11 @@ public static class SqlSugarInject
         if (sqlSugarConfigLst.Count > 0)
         {
             services.AddSingleton<ISqlSugarRepository>(SqlSugarRepository.Create);
-            ConsoleHelper.WriteLine("注入类型【 ISqlSugarRepository, SqlSugarRepository 】", backgroundColor: ConsoleColor.Green);
+            ConsoleHelper.WriteLine("注入类型【 ISqlSugarRepository, SqlSugarRepository 】");
         }
         else
         {
-            ConsoleHelper.WriteLine("SqlSugar配置不正确，无法类型【 ISqlSugarRepository, SqlSugarRepository 】", backgroundColor: ConsoleColor.DarkRed);
+            ConsoleHelper.WriteException("SqlSugar配置不正确，无法类型【 ISqlSugarRepository, SqlSugarRepository 】");
         }
 
         return services;

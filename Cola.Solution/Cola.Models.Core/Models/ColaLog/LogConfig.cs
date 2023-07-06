@@ -12,7 +12,7 @@ public class LogConfig
     /// <summary>
     ///     Log 分隔符 默认 *
     /// </summary>
-    public string? LogSeparator { get; set; }
+    public string? LogSeparator { get; set; } = "*";
 
     public string? SaveType { get; set; } = "Print";
 
@@ -21,7 +21,7 @@ public class LogConfig
     /// <summary>
     ///     连接字符串
     /// </summary>
-    public string? DbConnectionString { get; set; }
+    public string? DbConnectionString { get; set; } = "";
 
     public string DirectoryName { get; set; } = "SystemLog";
 

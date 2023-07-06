@@ -16,6 +16,7 @@ public static class ColaRedisInject
         IConfiguration config)
     {
         var cacheConfig = config.GetSection(SystemConstant.CONSTANT_COLACACHE_SECTION).Get<CacheConfigOption>();
+        cacheConfig = cacheConfig ?? new CacheConfigOption();
         return InjectCache(services, cacheConfig);
     }
     
@@ -42,7 +43,7 @@ public static class ColaRedisInject
             services.AddSingleton<IColaMemoryCache>(provider => new ColaMemoryCache(cacheConfig));
             ConsoleHelper.WriteInfo("注入类型【 ColaMemoryCache, IColaMemoryCache 】");
             services.AddSingleton<IColaHybridCache,ColaHybridCache>();
-            services.AddSingleton<IColaHybridCache>(s=>ColaHybridCache.Create(s));
+            services.AddSingleton<IColaHybridCache>(servicesProvider=>ColaHybridCache.Create(servicesProvider));
             ConsoleHelper.WriteInfo("注入类型【 ColaHybridCache, IColaHybridCache 】");
         }
         else if (cacheConfig.CacheType == CacheType.Redis.ToInt())

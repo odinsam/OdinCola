@@ -13,8 +13,7 @@ public class ConsoleHelper
     public static void WriteInfo(Object str)
     {
         var dt = DateTime.Now.ToString(TimestampForma);
-        Console.BackgroundColor = ConsoleColor.Green;
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine(dt + str);
         Console.ResetColor();
     }
@@ -22,8 +21,7 @@ public class ConsoleHelper
     public static void WriteInfo(int str)
     {
         var dt = DateTime.Now.ToString(TimestampForma);
-        Console.BackgroundColor = ConsoleColor.Green;
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine(dt + str);
         Console.ResetColor();
     }
@@ -31,8 +29,7 @@ public class ConsoleHelper
     public static void WriteInfo(string str)
     {
         var dt = DateTime.Now.ToString(TimestampForma);
-        Console.BackgroundColor = ConsoleColor.Green;
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine(dt + str);
         Console.ResetColor();
     }
@@ -40,8 +37,7 @@ public class ConsoleHelper
     public static void WriteInfo(string format, params object?[]? arg)
     {
         var dt = DateTime.Now.ToString(TimestampForma);
-        Console.BackgroundColor = ConsoleColor.Green;
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine(dt + format, arg);
         Console.ResetColor();
     }
@@ -53,8 +49,7 @@ public class ConsoleHelper
     public static void WriteException(Exception ex)
     {
         var dt = DateTime.Now.ToString(TimestampForma);
-        Console.BackgroundColor = ConsoleColor.DarkRed;
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine(dt + JsonConvert.SerializeObject(ex));
         Console.ResetColor();
     }
@@ -62,8 +57,7 @@ public class ConsoleHelper
     public static void WriteException(string format)
     {
         var dt = DateTime.Now.ToString(TimestampForma);
-        Console.BackgroundColor = ConsoleColor.DarkRed;
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine(dt + format);
         Console.ResetColor();
     }
@@ -71,8 +65,7 @@ public class ConsoleHelper
     public static void WriteException(string format, params object?[]? arg)
     {
         var dt = DateTime.Now.ToString(TimestampForma);
-        Console.BackgroundColor = ConsoleColor.DarkRed;
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine(dt + format, arg);
         Console.ResetColor();
     }

@@ -10,14 +10,15 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
         <ProjectReference Include="..\Cola.CaEF\Cola.CaEF.csproj" />
+        <ProjectReference Include="..\Cola.CaGrpc\Cola.CaGrpc.csproj" />
         <ProjectReference Include="..\Cola.CaLog\Cola.CaLog.csproj" />
         <ProjectReference Include="..\Cola.CaCache\Cola.CaCache.csproj" />
         <ProjectReference Include="..\Cola.CaSnowFlake\Cola.CaSnowFlake.csproj" />
         <ProjectReference Include="..\Cola.CaWebApi\Cola.CaWebApi.csproj" />
-        <PackageReference Include="Google.Protobuf" Version="3.13.0" />
-        <PackageReference Include="Grpc.Net.Client" Version="2.34.0" />
-        <PackageReference Include="Grpc.Net.ClientFactory" Version="2.32.0" />
-        <PackageReference Include="Grpc.Tools" Version="2.32.0">
+        <PackageReference Include="Google.Protobuf" Version="3.19.4" />
+        <PackageReference Include="Grpc.Net.Client" Version="2.46.0" />
+        <PackageReference Include="Grpc.Net.ClientFactory" Version="2.46.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.46.0.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

@@ -10,9 +10,10 @@
         <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-        <PackageReference Include="Grpc.AspNetCore" Version="2.34.0" />
-        <PackageReference Include="Grpc.Core" Version="2.34.0" />
-        <PackageReference Include="Grpc.Tools" Version="2.34.0">
+
+        <PackageReference Include="Grpc.AspNetCore" Version="2.46.0" />
+        <PackageReference Include="Grpc.Core" Version="2.46.1" />
+        <PackageReference Include="Grpc.Tools" Version="2.46.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -20,5 +21,12 @@
 
     <ItemGroup>
         <Protobuf Include="Protos\Greet.proto" GrpcServices="Server" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Cola.CaCache\Cola.CaCache.csproj" />
+      <ProjectReference Include="..\Cola.CaException\Cola.CaException.csproj" />
+      <ProjectReference Include="..\Cola.CaGrpc\Cola.CaGrpc.csproj" />
+      <ProjectReference Include="..\Cola.CaJwt\Cola.CaJwt.csproj" />
     </ItemGroup>
 </Project>

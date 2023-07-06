@@ -2,6 +2,7 @@
 using Cola.CaException;
 using Cola.CaUtils.Helper;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
@@ -52,7 +53,7 @@ public class ColaHybridCache : IColaHybridCache
 
     public bool Set<T>(string key, T value, TimeSpan? expiry = null, int database = 0)
     {
-        ColaMemoryCache.Set<T>(key,value,expiry ?? null);
+        ColaMemoryCache.Set<T>(key,value,expiry);
         ColaRedisCache.Set<T>(key,value,expiry,database);
         return true;
     }
