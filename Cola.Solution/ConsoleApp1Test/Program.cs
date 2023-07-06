@@ -171,7 +171,6 @@ var client = builder.Services.BuildServiceProvider().GetService<Greeter.GreeterC
 
 // IPC进程内调用grpc
 //net core 3.x 显式的指定HTTP/2不需要TLS支持
-<<<<<<< HEAD
 // AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
 // var credentials = CallCredentials.FromInterceptor((context, metadata) =>
